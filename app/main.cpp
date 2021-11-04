@@ -2,8 +2,11 @@
 
 int main(int argc, char** argv)
 {
-    std::cout << "/home/denys/Рабочий стол/repo/GitHub Projects/Module-Builder/test" << std::endl;
-    builder b("/home/denys/Рабочий стол/repo/GitHub Projects/Module-Builder/test");
+    if(argc < 2){
+        exit(1);
+    }
+
+    builder b(argv[1]);
     b.run();
 
     return 0;
