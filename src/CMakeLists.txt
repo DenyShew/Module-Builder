@@ -1,1 +1,1 @@
-add_library(source_builder STATIC builder.hpp builder.cpp)
+add_library(SourceBuilder builder.hpp builder.cpp)

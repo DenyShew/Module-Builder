@@ -1,3 +1,3 @@
-add_executable(builder main.cpp)
+add_executable(Builder main.cpp)
 
-target_link_libraries(builder PUBLIC source_builder)
+target_link_libraries(Builder PUBLIC SourceBuilder)

@@ -7,6 +7,8 @@
 #include <algorithm>
 #include <vector>
 
+#include <iostream>
+
 class builder
 {
 public:
@@ -17,7 +19,7 @@ private:
     void run_dir(const std::string& directory);
     void parse(const std::string& file, const std::string& dir);
 
-    void add_executable(const std::string exec_name, const std::string file, const std::string& dir);
+    void add_executable(const std::string exec_name, const std::string& dir);
     void add_module(const std::string& file, const std::string& dir);
     void set_bin(const std::string& bin_dir);
     void set_lib(const std::string& lib_dir);
