@@ -1,1 +1,1 @@
-add_module(test_file.cpp) 
+add_module(test_file.cpp,-fcoroutines) 

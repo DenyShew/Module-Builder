@@ -20,7 +20,7 @@ private:
     void parse(const std::string& file, const std::string& dir);
 
     void add_executable(const std::string exec_name, const std::string& dir);
-    void add_module(const std::string& file, const std::string& dir);
+    void add_module(const std::string& file, const std::string& flags, const std::string& dir);
     void set_bin(const std::string& bin_dir);
     void set_lib(const std::string& lib_dir);
     void set_module(const std::string& module_dir);

@@ -45,8 +45,18 @@ void builder::parse(const std::string& file, const std::string& dir)
         }
         if(!temp.find(addmod))
         {
-            std::string n_mod(temp.begin() + temp.find('(') + 1, temp.begin() + temp.find(')'));
-            add_module(n_mod, dir);
+            if(temp.find(',') != std::string::npos)
+            {
+                std::string n_mod(temp.begin() + temp.find('(') + 1, temp.begin() + temp.find(','));
+                std::string n_flags(temp.begin() + temp.find(',') + 1, temp.begin() + temp.find(')'));
+                add_module(n_mod, n_flags, dir);
+            }
+            else
+            {
+                std::string n_mod(temp.begin() + temp.find('(') + 1, temp.begin() + temp.find(')'));
+                std::string n_flags = "";
+                add_module(n_mod, n_flags, dir);
+            }
             continue;
         }
         if(!temp.find(addbin))
@@ -95,7 +105,7 @@ void builder::add_executable(const std::string exec_name, const std::string& dir
     code = system(command.c_str());
 }
 
-void builder::add_module(const std::string& file, const std::string& dir)
+void builder::add_module(const std::string& file, const std::string& flags, const std::string& dir)
 {
     int code;
     if(!std::filesystem::exists(dir + "/gcm.cache"))
@@ -103,7 +113,7 @@ void builder::add_module(const std::string& file, const std::string& dir)
         code = system(std::string("ln -s \"" + module_dir + "\"" + " gcm.cache").c_str());
     }
     //TODO: compile add flags
-    std::string command = "g++ -c -std=c++20 -fmodules-ts ";
+    std::string command = "g++ -c -std=c++20 -fmodules-ts " + flags + " ";
     command += "\"" + dir + "/" + file + "\"";
     code = system(command.c_str());
     std::string module_name;
