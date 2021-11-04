@@ -79,6 +79,7 @@ void builder::parse(const std::string& file, const std::string& dir)
 
 void builder::add_executable(const std::string exec_name, const std::string& dir)
 {
+    int code;
     std::string command = "g++";
     for(auto&& file : std::filesystem::directory_iterator(lib_dir))
     {
@@ -89,27 +90,29 @@ void builder::add_executable(const std::string exec_name, const std::string& dir
         }
     }
     command += " -o " + exec_name;
-    system(command.c_str());
+    code = system(command.c_str());
     command = "mv -f  ./" + exec_name + " \"" + binary_dir + "\"";
-    system(command.c_str());
+    code = system(command.c_str());
 }
 
 void builder::add_module(const std::string& file, const std::string& dir)
 {
+    int code;
     if(!std::filesystem::exists(dir + "/gcm.cache"))
     {
-        system(std::string("ln -s \"" + module_dir + "\"" + " gcm.cache").c_str());
+        code = system(std::string("ln -s \"" + module_dir + "\"" + " gcm.cache").c_str());
     }
+    //TODO: compile add flags
     std::string command = "g++ -c -std=c++20 -fmodules-ts ";
     command += "\"" + dir + "/" + file + "\"";
-    system(command.c_str());
+    code = system(command.c_str());
     std::string module_name;
     for(auto&& file : std::filesystem::directory_iterator("./"))
     {
         std::string file_name = file.path().string();
         if(file_name.find(".o") != std::string::npos)
         {
-            system(std::string("mv -f " + file_name + "  \"" + lib_dir + "\"").c_str());
+            code = system(std::string("mv -f " + file_name + "  \"" + lib_dir + "\"").c_str());
             break;
         }
     }

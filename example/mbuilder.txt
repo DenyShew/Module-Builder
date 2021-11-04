@@ -1,6 +1,6 @@
-set_binary(/home/denys/Рабочий стол/repo/GitHub Projects/Module-Builder/test/bin)
-set_library(/home/denys/Рабочий стол/repo/GitHub Projects/Module-Builder/test/lib)
-set_module(/home/denys/Рабочий стол/repo/GitHub Projects/Module-Builder/test/module)
+set_binary(../example/bin)
+set_library(../example/lib)
+set_module(../example/module)
 
 subdir(src)
 subdir(app)

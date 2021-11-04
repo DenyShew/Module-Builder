@@ -1,6 +1,6 @@
 #include <iostream>
 
-import server;
+import test_module;
 
 int main()
 {
@@ -8,6 +8,6 @@ int main()
     std::cout << "a: " << a << ", b: " << b << std::endl;
     sum(a, b);
     std::cout << "a: " << a << ", b: " << b << std::endl;
-    minus(a, b);
+    double_minus(a, b);
     std::cout << "a: " << a << ", b: " << b << std::endl;
 }
