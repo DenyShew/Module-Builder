@@ -39,7 +39,7 @@ void builder::parse(const std::string& file, const std::string& dir)
         {
             int start_index = addbin.size() + 1;
             std::string new_bin(temp.begin() + start_index, temp.end());
-            add_executable(new_bin, dir);
+            add_executable("main", new_bin, dir);//TODO: exec name
         }
         if(!temp.find(setbin))
         {
@@ -62,13 +62,9 @@ void builder::parse(const std::string& file, const std::string& dir)
     }
 }
 
-void add_executable(const std::string exec_name, const std::string file, const std::string& dir, const std::vector<std::string>& params)
+void builder::add_executable(const std::string exec_name, const std::string file, const std::string& dir)
 {
     std::string command = "g++";
-    for(auto&& param : params)
-    {
-        command += " " + param;
-    }
     command += " " + file;
     for(auto&& file : std::filesystem::directory_iterator(lib_dir))
     {
@@ -80,16 +76,12 @@ void add_executable(const std::string exec_name, const std::string file, const s
     }
     command += " -o " + exec_name;
     system(command.c_str());
-    system("mv -f " + dir + "/" + exec_name + " " + binary_dir);
+    system(std::string("mv -f " + dir + "/" + exec_name + " " + binary_dir).c_str());
 }
 
-void add_module(const std::string& file, const std::string& dir, const std::vector<std::string>& params)
+void builder::add_module(const std::string& file, const std::string& dir)
 {
-    std::string command = "g++ -c -std=c++20 -fmodules-ts";
-    for(auto&& param : params)
-    {
-        command += " " + param;
-    }
+    std::string command = "g++ -c -std=c++20 -fmodules-ts ";
     command += file;
     system(command.c_str());
     std::string module_name;
@@ -98,13 +90,13 @@ void add_module(const std::string& file, const std::string& dir, const std::vect
         std::string file_name = file.path().string();
         if(file_name.find(".o") != std::string::npos)
         {
-            system(std::string("mv -f " + file + " " + lib_dir).c_str());
+            system(std::string("mv -f " + file_name + " " + lib_dir).c_str());
             break;
         }
     }
     for(auto&& file : std::filesystem::directory_iterator(dir + "gcm.cache"))
     {
-        system(std::string("mv -f " + file + " " + module_dir).c_str());
+        system(std::string("mv -f " + file.path().string() + " " + module_dir).c_str());
         break;
     }
 }
